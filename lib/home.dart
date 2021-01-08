@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/dataBencana.dart';
 import 'package:frontend/galeri.dart';
-import 'package:frontend/pengaduan.dart';
 import 'package:frontend/user.dart';
+import 'package:frontend/dataBencana/bencana.dart';
+import 'package:frontend/pengaduan/menuPengaduan.dart';
+import 'package:frontend/kuis/kuis.dart';
+import 'package:frontend/pencegahan/menuPencegah.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -49,7 +51,7 @@ class _HomeState extends State<Home> {
                                     context,
                                     MaterialPageRoute(
                                         //mengirim parameter id
-                                        builder: (context) => Pengaduan()),
+                                        builder: (context) => MenuPengaduan()),
                                   );
                                 },
                                 child: Column(
@@ -99,7 +101,7 @@ class _HomeState extends State<Home> {
                                     context,
                                     MaterialPageRoute(
                                         //mengirim parameter id
-                                        builder: (context) => Bencana()),
+                                        builder: (context) => DataBencana()),
                                   );
                                 },
                                 child: Column(
@@ -258,7 +260,14 @@ class _HomeState extends State<Home> {
                               elevation: 5,
                               shadowColor: Color.fromARGB(100, 0, 0, 0),
                               child: InkWell(
-                                onTap: () {},
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        //mengirim parameter id
+                                        builder: (context) => Kuis()),
+                                  );
+                                },
                                 child: Column(
                                   children: <Widget>[
                                     Container(
@@ -301,7 +310,14 @@ class _HomeState extends State<Home> {
                               elevation: 5,
                               shadowColor: Color.fromARGB(100, 0, 0, 0),
                               child: InkWell(
-                                onTap: () {},
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        //mengirim parameter id
+                                        builder: (context) => MenuPencegahan()),
+                                  );
+                                },
                                 child: Column(
                                   children: <Widget>[
                                     Container(

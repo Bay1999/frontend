@@ -91,7 +91,7 @@ class _UserState extends State<User> {
                                           borderRadius:
                                               new BorderRadius.circular(5.0))),
                                   keyboardType: TextInputType.number,
-                                  initialValue: 'nama kamu dong',
+                                  initialValue: 'Tyas',
                                   onFieldSubmitted: (value) {
                                     //Validator
                                   },
@@ -111,7 +111,7 @@ class _UserState extends State<User> {
                                           borderRadius:
                                               new BorderRadius.circular(5.0))),
                                   keyboardType: TextInputType.number,
-                                  initialValue: 'alamatmu dodol',
+                                  initialValue: 'Lamongan',
                                   onFieldSubmitted: (value) {
                                     //Validator
                                   },

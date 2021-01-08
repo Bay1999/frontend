@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/pengaduan.dart';
+import 'package:frontend/pengaduan/pengaduan.dart';
 
 class Foto extends StatefulWidget {
   @override

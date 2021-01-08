@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'register.dart';
+import 'package:frontend/home.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 void main() {
   runApp(MyApp());
@@ -12,22 +16,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
         primarySwatch: Colors.blue,
-        // This makes the visual density adapt to the platform that you run
-        // the app on. For desktop platforms, the controls will be smaller and
-        // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
+      routes: {
+        "/home": (_) => new Home(),
+      },
     );
   }
 }
@@ -42,6 +37,33 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final emailController = TextEditingController();
+  final passController = TextEditingController();
+
+  Future<List<String>> getList(String email, String pass) async {
+    final http.Response response = await http.post(
+      'http://dlibrary.manganoid.com/api/pencegahan',
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'email': email,
+        'pass': pass,
+      }),
+    );
+    if (response.statusCode == 200) {
+      // If the server did return a 201 CREATED response,
+      // then parse the JSON.
+      // List jsonResponse = json.decode(response.body);
+      // return jsonResponse.map((job) => new Pencegahan.fromJson(job)).toList();
+      return json.decode(response.body);
+    } else {
+      // If the server did not return a 201 CREATED response,
+      // then throw an exception.
+      throw Exception(response.statusCode);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,6 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         child: Column(
                           children: <Widget>[
                             TextFormField(
+                              controller: emailController,
                               autofocus: false,
                               decoration: InputDecoration(
                                 contentPadding:
@@ -87,6 +110,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               ),
                             ),
                             TextFormField(
+                              controller: passController,
                               autofocus: false,
                               decoration: InputDecoration(
                                 contentPadding:
@@ -103,12 +127,8 @@ class _MyHomePageState extends State<MyHomePage> {
                               child: RaisedButton(
                                 color: Colors.blue,
                                 onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        //mengirim parameter id
-                                        builder: (context) => Register()),
-                                  );
+                                  Navigator.pushReplacementNamed(
+                                      context, "/home");
                                 },
                                 textColor: Colors.white,
                                 padding: EdgeInsets.all(0.0),
@@ -116,6 +136,22 @@ class _MyHomePageState extends State<MyHomePage> {
                                   padding: const EdgeInsets.all(10.0),
                                   child: const Text('Login',
                                       style: TextStyle(fontSize: 20)),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              child: FlatButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        //mengirim parameter id
+                                        builder: (context) => Register()),
+                                  );
+                                },
+                                child: Text(
+                                  'Registrasi',
+                                  style: TextStyle(color: Colors.blueAccent),
                                 ),
                               ),
                             )
