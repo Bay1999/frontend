@@ -4,6 +4,7 @@ import 'package:frontend/home.dart';
 import 'package:http/http.dart' as http;
 import 'package:frontend/model.dart';
 import 'dart:convert';
+import 'package:frontend/kuis/resultpage.dart';
 
 class Kuis extends StatefulWidget {
   @override
@@ -14,8 +15,13 @@ class _KuisState extends State<Kuis> {
   // var soal = ['ini adalah soal', 'ini soal 2'];
   var nomer;
   var jmlSoal;
+  var nilai = 0;
 
-  _soalLanjut() {
+  _soalLanjut(jawaban, benar) {
+    if (jawaban == benar) {
+      nilai += 10;
+    }
+
     if (nomer == null) {
       setState(() {
         nomer = 1;
@@ -28,7 +34,7 @@ class _KuisState extends State<Kuis> {
           context,
           MaterialPageRoute(
               //mengirim parameter id
-              builder: (context) => Home()),
+              builder: (context) => ResultPage(nilai: nilai.toString())),
         );
       }
     }
@@ -69,33 +75,137 @@ class _KuisState extends State<Kuis> {
                     alignment: Alignment.center,
                     child: Column(
                       children: <Widget>[
-                        Card(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15.0),
-                          ),
-                          color: Colors.white,
-                          elevation: 5,
-                          shadowColor: Color.fromARGB(100, 0, 0, 0),
-                          child: Container(
-                            margin: EdgeInsets.symmetric(
-                                vertical: 30, horizontal: 10),
-                            padding: EdgeInsets.symmetric(horizontal: 10),
-                            width: MediaQuery.of(context).size.width * 0.8,
-                            child: Text(soal.data[0].soal),
+                        Container(
+                          margin: EdgeInsets.only(bottom: 30),
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15.0),
+                            ),
+                            color: Colors.white,
+                            elevation: 5,
+                            shadowColor: Color.fromARGB(100, 0, 0, 0),
+                            child: Container(
+                              margin: EdgeInsets.symmetric(
+                                  vertical: 30, horizontal: 10),
+                              padding: EdgeInsets.symmetric(horizontal: 10),
+                              width: MediaQuery.of(context).size.width * 0.8,
+                              child: Text(soal.data[0].soal),
+                            ),
                           ),
                         ),
-                        // if (soal.length > nomer + 1)
-                        FlatButton(
-                          color: Colors.blueAccent,
-                          onPressed: () {
+                        InkWell(
+                          onTap: () {
                             setState(() {
-                              _soalLanjut();
+                              _soalLanjut(
+                                  soal.data[0].pila, soal.data[0].jawaban);
                               print('Jumlah soal : ' + jmlSoal.toString());
                               print(nomer + 1);
                             });
                           },
-                          child: Text('lanjut'),
-                        )
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15.0),
+                            ),
+                            color: Colors.white,
+                            elevation: 5,
+                            shadowColor: Color.fromARGB(100, 0, 0, 0),
+                            child: Container(
+                              margin: EdgeInsets.symmetric(
+                                  vertical: 20, horizontal: 10),
+                              padding: EdgeInsets.symmetric(horizontal: 10),
+                              width: MediaQuery.of(context).size.width * 0.8,
+                              child: Text('A. ' + soal.data[0].pila),
+                            ),
+                          ),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            setState(() {
+                              _soalLanjut(
+                                  soal.data[0].pila, soal.data[0].jawaban);
+                              print('Jumlah soal : ' + jmlSoal.toString());
+                              print(nomer + 1);
+                            });
+                          },
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15.0),
+                            ),
+                            color: Colors.white,
+                            elevation: 5,
+                            shadowColor: Color.fromARGB(100, 0, 0, 0),
+                            child: Container(
+                              margin: EdgeInsets.symmetric(
+                                  vertical: 20, horizontal: 10),
+                              padding: EdgeInsets.symmetric(horizontal: 10),
+                              width: MediaQuery.of(context).size.width * 0.8,
+                              child: Text('B. ' + soal.data[0].pilb),
+                            ),
+                          ),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            setState(() {
+                              _soalLanjut(
+                                  soal.data[0].pilc, soal.data[0].jawaban);
+                              print('Jumlah soal : ' + jmlSoal.toString());
+                              print(nomer + 1);
+                            });
+                          },
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15.0),
+                            ),
+                            color: Colors.white,
+                            elevation: 5,
+                            shadowColor: Color.fromARGB(100, 0, 0, 0),
+                            child: Container(
+                              margin: EdgeInsets.symmetric(
+                                  vertical: 20, horizontal: 10),
+                              padding: EdgeInsets.symmetric(horizontal: 10),
+                              width: MediaQuery.of(context).size.width * 0.8,
+                              child: Text('C. ' + soal.data[0].pilc),
+                            ),
+                          ),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            setState(() {
+                              _soalLanjut(
+                                  soal.data[0].pild, soal.data[0].jawaban);
+                              print('Jumlah soal : ' + jmlSoal.toString());
+                              print(nomer + 1);
+                            });
+                          },
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15.0),
+                            ),
+                            color: Colors.white,
+                            elevation: 5,
+                            shadowColor: Color.fromARGB(100, 0, 0, 0),
+                            child: Container(
+                              margin: EdgeInsets.symmetric(
+                                  vertical: 20, horizontal: 10),
+                              padding: EdgeInsets.symmetric(horizontal: 10),
+                              width: MediaQuery.of(context).size.width * 0.8,
+                              child: Text('D. ' + soal.data[0].pild),
+                            ),
+                          ),
+                        ),
+
+                        // if (soal.length > nomer + 1)
+                        // FlatButton(
+                        //   color: Colors.blueAccent,
+                        //   onPressed: () {
+                        //     setState(() {
+                        //       _soalLanjut();
+                        //       print('Jumlah soal : ' + jmlSoal.toString());
+                        //       print(nomer + 1);
+                        //     });
+                        //   },
+                        //   child: Text('lanjut'),
+                        // )
                       ],
                     ),
                   );
