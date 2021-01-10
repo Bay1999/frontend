@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/pengaduan/listPencegahan.dart';
+import 'package:frontend/pencegahan/listPencegahan.dart';
 
 class Banjir extends StatelessWidget {
   @override

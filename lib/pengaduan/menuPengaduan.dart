@@ -62,6 +62,7 @@ class _MenuPengaduanState extends State<MenuPengaduan> {
   void _checkIfLoggedIn() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     token = localStorage.getString('id');
+    print(token);
     if (token == null) {
       Navigator.pushAndRemoveUntil(
           context,
@@ -321,11 +322,14 @@ class _MenuPengaduanState extends State<MenuPengaduan> {
                                                                     .text)
                                                         .then((value) {
                                                       print(value);
-                                                      Navigator.pushReplacement(
-                                                          context,
-                                                          new MaterialPageRoute(
-                                                              builder: (context) =>
-                                                                  new Pengaduan()));
+                                                      setState(() {
+                                                        menu = 2;
+                                                      });
+                                                      // Navigator.pushReplacement(
+                                                      //     context,
+                                                      //     new MaterialPageRoute(
+                                                      //         builder: (context) =>
+                                                      //             new Pengaduan()));
                                                       // setState(() {
                                                       //   // submitProfileResponse = value;
                                                       //   // checkResponse();

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/pengaduan/itemPencegahan.dart';
+import 'package:frontend/pencegahan/itemPencegahan.dart';
 
 class ListPencegahan extends StatefulWidget {
   final String bencana;

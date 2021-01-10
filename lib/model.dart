@@ -72,15 +72,17 @@ class SoalKuis {
 class DataPengaduan {
   final String judul;
   final String pengaduan;
-  final String lokasi;
+  final String tempat;
+  final String foto;
 
-  DataPengaduan({this.judul, this.pengaduan, this.lokasi});
+  DataPengaduan({this.judul, this.pengaduan, this.tempat, this.foto});
 
   factory DataPengaduan.fromJson(Map<String, dynamic> json) {
     return DataPengaduan(
       judul: json['judul'],
       pengaduan: json['pengaduan'],
-      lokasi: json['lokasi'],
+      tempat: json['tempat'],
+      foto: json['foto'],
     );
   }
 }

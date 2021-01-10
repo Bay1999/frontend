@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/model.dart';
-import 'package:frontend/pengaduan/detailPencegahan.dart';
+import 'package:frontend/pencegahan/detailPencegahan.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
