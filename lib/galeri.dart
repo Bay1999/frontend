@@ -12,7 +12,7 @@ class _GaleriState extends State<Galeri> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Belajar Mitigasi Bencana"),
+        title: Text("Galeri"),
       ),
       body: Container(
         height: MediaQuery.of(context).size.height,
@@ -53,7 +53,7 @@ class _GaleriState extends State<Galeri> {
                                 margin: EdgeInsets.symmetric(
                                     vertical: 20, horizontal: 40),
                                 child: Image.asset(
-                                  'assets/images/plant.png',
+                                  'assets/images/picture.png',
                                   height:
                                       MediaQuery.of(context).size.height * 0.1,
                                 ),
@@ -97,7 +97,7 @@ class _GaleriState extends State<Galeri> {
                                 margin: EdgeInsets.symmetric(
                                     vertical: 20, horizontal: 40),
                                 child: Image.asset(
-                                  'assets/images/plant.png',
+                                  'assets/images/multimedia.png',
                                   height:
                                       MediaQuery.of(context).size.height * 0.1,
                                 ),

@@ -16,7 +16,7 @@ class _DetailPencegahanState extends State<DetailPencegahan> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Belajar Mitigasi Bencana"),
+        title: Text("Detail Penceahan Bencana"),
       ),
       body: Container(
         child: Column(

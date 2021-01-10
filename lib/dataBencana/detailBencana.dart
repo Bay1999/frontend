@@ -29,7 +29,7 @@ class _DetailBencanaState extends State<DetailBencana> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Belajar Mitigasi Bencana"),
+        title: Text("Detail Bencana"),
       ),
       body: Container(
         padding: EdgeInsets.all(20),

@@ -35,7 +35,7 @@ class Banjir extends StatelessWidget {
                         margin:
                             EdgeInsets.symmetric(vertical: 20, horizontal: 40),
                         child: Image.asset(
-                          'assets/images/plant.png',
+                          'assets/images/banjir.png',
                           height: MediaQuery.of(context).size.height * 0.1,
                         ),
                       ),
@@ -91,7 +91,7 @@ class Kekeringan extends StatelessWidget {
                         margin:
                             EdgeInsets.symmetric(vertical: 20, horizontal: 40),
                         child: Image.asset(
-                          'assets/images/plant.png',
+                          'assets/images/kekeringan.png',
                           height: MediaQuery.of(context).size.height * 0.1,
                         ),
                       ),

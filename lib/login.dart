@@ -34,7 +34,7 @@ class _LoginPageState extends State<LoginPage> {
               children: <Widget>[
                 Container(
                   child: Image.asset(
-                    'assets/images/plant.png',
+                    'assets/images/BPBD.jpg',
                     height: 80,
                   ),
                 ),

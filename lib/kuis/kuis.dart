@@ -43,7 +43,7 @@ class _KuisState extends State<Kuis> {
   Future<List<SoalKuis>> getList() async {
     // final response = await http
     //     .get('http://192.168.30.102:8000/api/listbuku/' + widget.id.toString());
-    final response = await http.get('http://192.168.43.2:8000/api/kuis');
+    final response = await http.get('http://dlibrary.manganoid.com/api/kuis');
     if (response.statusCode == 200) {
       List jsonResponse = json.decode(response.body);
       return jsonResponse.map((job) => new SoalKuis.fromJson(job)).toList();
@@ -65,6 +65,10 @@ class _KuisState extends State<Kuis> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Kuis"),
+        backgroundColor: Colors.blueAccent,
+      ),
       body: Container(
           margin: EdgeInsets.fromLTRB(20, 100, 20, 10),
           child: FutureBuilder<List<SoalKuis>>(
@@ -81,7 +85,7 @@ class _KuisState extends State<Kuis> {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15.0),
                             ),
-                            color: Colors.white,
+                            color: Colors.blueAccent,
                             elevation: 5,
                             shadowColor: Color.fromARGB(100, 0, 0, 0),
                             child: Container(
@@ -89,7 +93,10 @@ class _KuisState extends State<Kuis> {
                                   vertical: 30, horizontal: 10),
                               padding: EdgeInsets.symmetric(horizontal: 10),
                               width: MediaQuery.of(context).size.width * 0.8,
-                              child: Text(soal.data[0].soal),
+                              child: Text(
+                                soal.data[0].soal,
+                                style: TextStyle(color: Colors.white),
+                              ),
                             ),
                           ),
                         ),
@@ -210,7 +217,7 @@ class _KuisState extends State<Kuis> {
                     ),
                   );
                 } else if (soal.hasError) {
-                  return Center(child: Text(soal.hasError.toString()));
+                  return Center(child: Text("${soal.error}"));
                 }
                 return Center(
                   child: CircularProgressIndicator(),

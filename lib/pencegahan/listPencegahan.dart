@@ -17,7 +17,7 @@ class _ListPencegahanState extends State<ListPencegahan> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Belajar Mitigasi Bencana"),
+        title: Text("Daftar Pencegahan"),
       ),
       body: Container(
         child: Column(

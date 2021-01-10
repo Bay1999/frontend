@@ -82,7 +82,7 @@ class _HomeState extends State<Home> {
                                       margin: EdgeInsets.symmetric(
                                           vertical: 20, horizontal: 40),
                                       child: Image.asset(
-                                        'assets/images/plant.png',
+                                        'assets/images/pengaduan.png',
                                         height:
                                             MediaQuery.of(context).size.height *
                                                 0.1,
@@ -132,7 +132,7 @@ class _HomeState extends State<Home> {
                                       margin: EdgeInsets.symmetric(
                                           vertical: 20, horizontal: 40),
                                       child: Image.asset(
-                                        'assets/images/plant.png',
+                                        'assets/images/data.png',
                                         height:
                                             MediaQuery.of(context).size.height *
                                                 0.1,
@@ -189,7 +189,7 @@ class _HomeState extends State<Home> {
                                       margin: EdgeInsets.symmetric(
                                           vertical: 20, horizontal: 40),
                                       child: Image.asset(
-                                        'assets/images/plant.png',
+                                        'assets/images/galeri.png',
                                         height:
                                             MediaQuery.of(context).size.height *
                                                 0.1,
@@ -239,7 +239,7 @@ class _HomeState extends State<Home> {
                                       margin: EdgeInsets.symmetric(
                                           vertical: 20, horizontal: 40),
                                       child: Image.asset(
-                                        'assets/images/plant.png',
+                                        'assets/images/profile.png',
                                         height:
                                             MediaQuery.of(context).size.height *
                                                 0.1,
@@ -296,7 +296,7 @@ class _HomeState extends State<Home> {
                                       margin: EdgeInsets.symmetric(
                                           vertical: 20, horizontal: 40),
                                       child: Image.asset(
-                                        'assets/images/plant.png',
+                                        'assets/images/quiz.png',
                                         height:
                                             MediaQuery.of(context).size.height *
                                                 0.1,
@@ -346,7 +346,7 @@ class _HomeState extends State<Home> {
                                       margin: EdgeInsets.symmetric(
                                           vertical: 20, horizontal: 40),
                                       child: Image.asset(
-                                        'assets/images/plant.png',
+                                        'assets/images/pencegahan.png',
                                         height:
                                             MediaQuery.of(context).size.height *
                                                 0.1,

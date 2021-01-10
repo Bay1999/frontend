@@ -11,7 +11,7 @@ class _MenuPencegahanState extends State<MenuPencegahan> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Belajar Mitigasi Bencana"),
+        title: Text("Pencegahan Bencana"),
       ),
       body: Container(
         child: Column(

@@ -11,7 +11,7 @@ class _FotoState extends State<Foto> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Belajar Mitigasi Bencana"),
+        title: Text("Foto"),
       ),
       body: Container(
         height: MediaQuery.of(context).size.height,
@@ -45,7 +45,7 @@ class _FotoState extends State<Foto> {
                                 margin: EdgeInsets.symmetric(
                                     vertical: 20, horizontal: 40),
                                 child: Image.asset(
-                                  'assets/images/plant.png',
+                                  'assets/images/banjir.png',
                                   height:
                                       MediaQuery.of(context).size.height * 0.1,
                                 ),
@@ -89,7 +89,7 @@ class _FotoState extends State<Foto> {
                                 margin: EdgeInsets.symmetric(
                                     vertical: 20, horizontal: 40),
                                 child: Image.asset(
-                                  'assets/images/plant.png',
+                                  'assets/images/kekeringan.png',
                                   height:
                                       MediaQuery.of(context).size.height * 0.1,
                                 ),

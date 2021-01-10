@@ -96,7 +96,7 @@ class _MenuPengaduanState extends State<MenuPengaduan> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Belajar Mitigasi Bencana"),
+        title: Text("Menu Pengaduan"),
       ),
       body: Container(
         child: SingleChildScrollView(

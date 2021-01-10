@@ -17,7 +17,7 @@ class _DetailPengaduanState extends State<DetailPengaduan> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Belajar Mitigasi Bencana"),
+        title: Text("Detail Pengaduan"),
       ),
       body: Container(
         padding: EdgeInsets.all(20),

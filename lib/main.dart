@@ -8,6 +8,7 @@ import 'package:frontend/home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:splashscreen/splashscreen.dart';
 
 void main() {
   runApp(MyApp());
@@ -23,10 +24,39 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: Splash(),
       routes: {
         "/home": (_) => new Home(),
       },
+    );
+  }
+}
+
+class Splash extends StatefulWidget {
+  @override
+  _SplashState createState() => new _SplashState();
+}
+
+class _SplashState extends State<Splash> {
+  @override
+  Widget build(BuildContext context) {
+    return new SplashScreen(
+      seconds: 8,
+      navigateAfterSeconds: new MyHomePage(title: 'Flutter Demo Home Page'),
+      title: new Text(
+        'Mitigasi Bencana\ndi Kabupaten Lamongan',
+        textAlign: TextAlign.center,
+        style: new TextStyle(
+            fontWeight: FontWeight.bold, fontSize: 20.0, color: Colors.black38),
+      ),
+      image: new Image.asset(
+        'assets/images/BPBD.jpg',
+        height: MediaQuery.of(context).size.height * 0.4,
+      ),
+      backgroundColor: Colors.white,
+      styleTextUnderTheLoader: new TextStyle(),
+      photoSize: 100.0,
+      loaderColor: Colors.white,
     );
   }
 }
