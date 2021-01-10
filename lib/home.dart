@@ -1,10 +1,17 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:frontend/api/api_login.dart';
 import 'package:frontend/galeri.dart';
+import 'package:frontend/login.dart';
 import 'package:frontend/user.dart';
 import 'package:frontend/dataBencana/bencana.dart';
 import 'package:frontend/pengaduan/menuPengaduan.dart';
 import 'package:frontend/kuis/kuis.dart';
 import 'package:frontend/pencegahan/menuPencegah.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'main.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -12,11 +19,26 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  bool _isLoading = false;
+  var token, nama, icon;
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Belajar Mitigasi Bencana"),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.logout),
+            onPressed: () {
+              _showMyDialog();
+            },
+          )
+        ],
       ),
       body: Container(
         height: MediaQuery.of(context).size.height,
@@ -350,5 +372,42 @@ class _HomeState extends State<Home> {
         ),
       ),
     );
+  }
+
+  Future<void> _showMyDialog() async {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("Apakah Anda Yakin?"),
+          content:
+              new Text("Setelah Log Out Anda Akan diarahkan Ke Form Login"),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("Close"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            new FlatButton(
+              child: new Text("Log Out"),
+              onPressed: () {
+                Navigator.of(context).pop();
+                logout();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void logout() async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    localStorage.remove('id');
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => LoginPage()));
   }
 }

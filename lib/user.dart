@@ -1,5 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:frontend/api/api_login.dart';
 import 'package:frontend/home.dart';
+import 'package:frontend/login.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class User extends StatefulWidget {
   @override
@@ -9,6 +14,7 @@ class User extends StatefulWidget {
 class _UserState extends State<User> {
   var _formKey = GlobalKey<FormState>();
   var isLoading = false;
+  var token, nama, nik, username;
 
   void _submit() {
     final isValid = _formKey.currentState.validate();
@@ -16,6 +22,38 @@ class _UserState extends State<User> {
       return;
     }
     _formKey.currentState.save();
+  }
+
+  @override
+  void initState() {
+    _checkIfLoggedIn();
+    super.initState();
+  }
+
+  void _checkIfLoggedIn() async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    token = localStorage.getString('id');
+    if (token == null) {
+      Navigator.pushAndRemoveUntil(
+          context,
+          new MaterialPageRoute(builder: (context) => LoginPage()),
+          (Route<dynamic> route) => false);
+    } else {
+      _getData(token);
+    }
+  }
+
+  void _getData(String _token) async {
+    var data = {'id_user': _token};
+    print(data);
+    var res = await Network().authData(data, 'api/apps/user');
+    var body = json.decode(res.body);
+    print(body['name']);
+    setState(() {
+      nama = body['name'];
+      username = body['username'];
+      nik = body['NIK'];
+    });
   }
 
   @override
@@ -28,8 +66,6 @@ class _UserState extends State<User> {
         //body
         body: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Container(
                 child: Text(
@@ -38,89 +74,61 @@ class _UserState extends State<User> {
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(top: 20),
-                child: Icon(
-                  Icons.account_circle,
-                  size: 100,
-                  color: Colors.black38,
-                ),
-              ),
-              Container(
                 margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                child: Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
-                    color: Colors.white,
-                    elevation: 5,
-                    shadowColor: Color.fromARGB(100, 0, 0, 0),
+                child: Container(
                     child: Container(
                         margin:
                             EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                         child: Form(
                           key: _formKey,
                           child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Container(
                                 margin: EdgeInsets.only(bottom: 15),
-                                child: TextFormField(
-                                  decoration: InputDecoration(
-                                      labelText: 'NIK',
-                                      border: OutlineInputBorder(
-                                          borderRadius:
-                                              new BorderRadius.circular(5.0))),
-                                  keyboardType: TextInputType.number,
-                                  initialValue: '21023901********',
-                                  onFieldSubmitted: (value) {
-                                    //Validator
-                                  },
-                                  validator: (value) {
-                                    if (value.isEmpty) {
-                                      return 'Masukan NIK!';
-                                    }
-                                    return null;
-                                  },
+                                child: Text(
+                                  'NIK :',
+                                  style: TextStyle(fontSize: 18.0),
+                                  textAlign: TextAlign.left,
                                 ),
                               ),
                               Container(
                                 margin: EdgeInsets.only(bottom: 15),
-                                child: TextFormField(
-                                  decoration: InputDecoration(
-                                      labelText: 'Nama',
-                                      border: OutlineInputBorder(
-                                          borderRadius:
-                                              new BorderRadius.circular(5.0))),
-                                  keyboardType: TextInputType.number,
-                                  initialValue: 'Tyas',
-                                  onFieldSubmitted: (value) {
-                                    //Validator
-                                  },
-                                  validator: (value) {
-                                    if (value.isEmpty) {
-                                      return 'Masukan NIK!';
-                                    }
-                                    return null;
-                                  },
+                                child: Text(
+                                  nik ?? '',
+                                  style: TextStyle(fontSize: 18.0),
+                                  textAlign: TextAlign.left,
                                 ),
                               ),
                               Container(
-                                child: TextFormField(
-                                  decoration: InputDecoration(
-                                      labelText: 'Alamat',
-                                      border: OutlineInputBorder(
-                                          borderRadius:
-                                              new BorderRadius.circular(5.0))),
-                                  keyboardType: TextInputType.number,
-                                  initialValue: 'Lamongan',
-                                  onFieldSubmitted: (value) {
-                                    //Validator
-                                  },
-                                  validator: (value) {
-                                    if (value.isEmpty) {
-                                      return 'Masukan NIK!';
-                                    }
-                                    return null;
-                                  },
+                                margin: EdgeInsets.only(bottom: 15),
+                                child: Text(
+                                  'Nama :',
+                                  style: TextStyle(fontSize: 18.0),
+                                  textAlign: TextAlign.left,
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(bottom: 15),
+                                child: Text(
+                                  nama ?? '',
+                                  style: TextStyle(fontSize: 18.0),
+                                  textAlign: TextAlign.left,
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(bottom: 15),
+                                child: Text(
+                                  'Username :',
+                                  style: TextStyle(fontSize: 18.0),
+                                  textAlign: TextAlign.left,
+                                ),
+                              ),
+                              Container(
+                                child: Text(
+                                  username ?? '',
+                                  style: TextStyle(fontSize: 18.0),
+                                  textAlign: TextAlign.left,
                                 ),
                               ),
                             ],

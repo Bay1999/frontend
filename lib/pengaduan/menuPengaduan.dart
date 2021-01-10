@@ -1,7 +1,14 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:frontend/api/postPengaduan.dart';
+import 'package:frontend/login.dart';
 import 'package:frontend/pengaduan/pengaduan.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+
+import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MenuPengaduan extends StatefulWidget {
   @override
@@ -12,10 +19,56 @@ final _formKey = GlobalKey<FormState>();
 
 class _MenuPengaduanState extends State<MenuPengaduan> {
   var menu = 1;
-
+  Future<File> file;
+  String status = '';
+  var nama,
+      email,
+      no_hp,
+      password,
+      tgl_lahir,
+      alamat,
+      provinsi,
+      kota,
+      kecamatan;
+  String _valProvince;
+  String namaProvince;
+  String nomorHp = '082264046359';
+  var urlImage = 'images/add-image.png';
+  String base64Image;
+  File tmpFile;
+  String errMessage = 'Error Uploading Image';
   final judulController = TextEditingController();
   final pengaduanController = TextEditingController();
   final lokasiController = TextEditingController();
+  File selectedImage;
+  Uri filename;
+  String token;
+  final _picker = ImagePicker();
+
+  void _submit() {
+    final isValid = _formKey.currentState.validate();
+    if (!isValid) {
+      return;
+    }
+    _formKey.currentState.save();
+  }
+
+  @override
+  void initState() {
+    _checkIfLoggedIn();
+    super.initState();
+  }
+
+  void _checkIfLoggedIn() async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    token = localStorage.getString('id');
+    if (token == null) {
+      Navigator.pushAndRemoveUntil(
+          context,
+          new MaterialPageRoute(builder: (context) => LoginPage()),
+          (Route<dynamic> route) => false);
+    }
+  }
 
   Future<String> sendPengaduan(
       String judul, String pengaduan, String lokasi) async {
@@ -128,6 +181,40 @@ class _MenuPengaduanState extends State<MenuPengaduan> {
                                           key: _formKey,
                                           child: Column(
                                             children: <Widget>[
+                                              Center(
+                                                child: GestureDetector(
+                                                  onTap: () {
+                                                    _showPicker(context);
+                                                  },
+                                                  child: Container(
+                                                    width: 100,
+                                                    child: selectedImage != null
+                                                        ? ClipRRect(
+                                                            // borderRadius: BorderRadius.circular(50),
+                                                            child: Image.file(
+                                                              selectedImage,
+                                                              fit: BoxFit
+                                                                  .fitHeight,
+                                                            ),
+                                                          )
+                                                        : Container(
+                                                            height: 100,
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              color: Colors
+                                                                  .grey[200],
+                                                              // borderRadius: BorderRadius.circular(50)
+                                                            ),
+                                                            child: Card(
+                                                                child: Icon(Icons
+                                                                    .add_a_photo)),
+                                                          ),
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 10.0,
+                                              ),
                                               Container(
                                                 margin:
                                                     EdgeInsets.only(bottom: 15),
@@ -215,16 +302,35 @@ class _MenuPengaduanState extends State<MenuPengaduan> {
                                                 onPressed: () {
                                                   if (_formKey.currentState
                                                       .validate()) {
-                                                    sendPengaduan(
-                                                        judulController.text,
-                                                        pengaduanController
-                                                            .text,
-                                                        lokasiController.text);
-                                                    print(judulController.text);
-                                                    print(pengaduanController
-                                                        .text);
-                                                    print(
-                                                        lokasiController.text);
+                                                    // submitProfile();
+                                                    ServiceProfile service =
+                                                        ServiceProfile();
+                                                    service
+                                                        .submitSubscription(
+                                                            file: selectedImage,
+                                                            filename: filename,
+                                                            id_user: token,
+                                                            judul:
+                                                                judulController
+                                                                    .text,
+                                                            pengaduan:
+                                                                pengaduanController
+                                                                    .text,
+                                                            tempat:
+                                                                lokasiController
+                                                                    .text)
+                                                        .then((value) {
+                                                      print(value);
+                                                      Navigator.pushReplacement(
+                                                          context,
+                                                          new MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  new Pengaduan()));
+                                                      // setState(() {
+                                                      //   // submitProfileResponse = value;
+                                                      //   // checkResponse();
+                                                      // });
+                                                    });
                                                   }
                                                 },
                                                 textColor: Colors.white,
@@ -250,5 +356,89 @@ class _MenuPengaduanState extends State<MenuPengaduan> {
         ),
       ),
     );
+  }
+
+  chooseImage() {
+    setState(() {
+      file = ImagePicker.pickImage(source: ImageSource.gallery);
+    });
+  }
+
+  Widget showImage() {
+    return FutureBuilder<File>(
+      future: file,
+      builder: (BuildContext context, AsyncSnapshot<File> snapshot) {
+        if (snapshot.connectionState == ConnectionState.done &&
+            null != snapshot.data) {
+          tmpFile = snapshot.data;
+          base64Image = base64Encode(snapshot.data.readAsBytesSync());
+          return Flexible(
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(50.0),
+              child: Image.file(
+                snapshot.data,
+                fit: BoxFit.fill,
+                height: 100.0,
+              ),
+            ),
+          );
+        } else if (null != snapshot.error) {
+          return const Text(
+            'Error Picking Image',
+            textAlign: TextAlign.center,
+          );
+        } else {
+          return Flexible(
+            child: Card(
+              child: Image.asset(
+                'images/add-image.png',
+                fit: BoxFit.fill,
+                height: 100.0,
+              ),
+            ),
+          );
+        }
+      },
+    );
+  }
+
+  void _showPicker(context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc) {
+          return SafeArea(
+            child: Container(
+              child: new Wrap(
+                children: <Widget>[
+                  new ListTile(
+                      leading: new Icon(Icons.photo_library),
+                      title: new Text('Photo Library'),
+                      onTap: () {
+                        _imgFromGallery();
+                        Navigator.of(context).pop();
+                      }),
+                  // new ListTile(
+                  //   leading: new Icon(Icons.photo_camera),
+                  //   title: new Text('Camera'),
+                  //   onTap: () {
+                  //     _imgFromCamera();
+                  //     Navigator.of(context).pop();
+                  //   },
+                  // ),
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
+  _imgFromGallery() async {
+    PickedFile image =
+        await _picker.getImage(source: ImageSource.gallery, imageQuality: 50);
+    if (image.path != null) {
+      setState(() {
+        selectedImage = File(image.path != null ? image.path : '');
+      });
+    }
   }
 }

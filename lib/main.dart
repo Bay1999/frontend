@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:frontend/api/api_login.dart';
+import 'package:frontend/login.dart';
+import 'home.dart';
 import 'register.dart';
 import 'package:frontend/home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -37,6 +41,25 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  bool isAuth = false;
+  @override
+  void initState() {
+    _checkIfLoggedIn();
+    super.initState();
+  }
+
+  void _checkIfLoggedIn() async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    var token = localStorage.getString('id');
+    if (token != null) {
+      setState(() {
+        isAuth = true;
+      });
+    }
+  }
+
+  String email, password;
+  bool _isLoading = false;
   final emailController = TextEditingController();
   final passController = TextEditingController();
 
@@ -66,100 +89,14 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    Widget child;
+    if (isAuth) {
+      child = Home();
+    } else {
+      child = LoginPage();
+    }
     return Scaffold(
-        appBar: AppBar(
-            title: Center(
-          child: Text('Belajar Mitigasi Bencana'),
-        )),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                child: Image.asset(
-                  'assets/images/plant.png',
-                  height: 80,
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
-                child: Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
-                    color: Colors.white,
-                    elevation: 5,
-                    shadowColor: Color.fromARGB(100, 0, 0, 0),
-                    child: Container(
-                        margin:
-                            EdgeInsets.symmetric(horizontal: 40, vertical: 60),
-                        child: Column(
-                          children: <Widget>[
-                            TextFormField(
-                              controller: emailController,
-                              autofocus: false,
-                              decoration: InputDecoration(
-                                contentPadding:
-                                    EdgeInsets.fromLTRB(20, 17, 20, 0),
-                                hintText: 'Username',
-                                hintStyle: TextStyle(
-                                    color: Colors.black38, fontSize: 16),
-                                prefixIcon: Icon(Icons.person),
-                                // suffixIcon: Icon(Icons.search),
-                              ),
-                            ),
-                            TextFormField(
-                              controller: passController,
-                              autofocus: false,
-                              decoration: InputDecoration(
-                                contentPadding:
-                                    EdgeInsets.fromLTRB(20, 17, 20, 0),
-                                hintText: 'Password',
-                                hintStyle: TextStyle(
-                                    color: Colors.black38, fontSize: 16),
-                                prefixIcon: Icon(Icons.vpn_key),
-                                // suffixIcon: Icon(Icons.search),
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
-                              child: RaisedButton(
-                                color: Colors.blue,
-                                onPressed: () {
-                                  Navigator.pushReplacementNamed(
-                                      context, "/home");
-                                },
-                                textColor: Colors.white,
-                                padding: EdgeInsets.all(0.0),
-                                child: Container(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: const Text('Login',
-                                      style: TextStyle(fontSize: 20)),
-                                ),
-                              ),
-                            ),
-                            Container(
-                              child: FlatButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        //mengirim parameter id
-                                        builder: (context) => Register()),
-                                  );
-                                },
-                                child: Text(
-                                  'Registrasi',
-                                  style: TextStyle(color: Colors.blueAccent),
-                                ),
-                              ),
-                            )
-                          ],
-                        ))),
-              )
-            ],
-          ),
-        ));
+      body: child,
+    );
   }
 }
