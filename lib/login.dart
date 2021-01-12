@@ -68,6 +68,7 @@ class _LoginPageState extends State<LoginPage> {
                               TextFormField(
                                 controller: passController,
                                 autofocus: false,
+                                obscureText: true,
                                 decoration: InputDecoration(
                                   contentPadding:
                                       EdgeInsets.fromLTRB(20, 17, 20, 0),
