@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/dataBencana/dataBencana.dart';
+import 'package:frontend/dataBencana/visualisasibencana.dart';
 
 class DataBencana extends StatefulWidget {
   @override
@@ -76,6 +77,7 @@ class _DataBencanaState extends State<DataBencana> {
                     // Bencana()
                     if (menu == 1) Banjir(),
                     if (menu == 1) Kekeringan(),
+                    if (menu == 2) VisualisasiBencana(),
                   ],
                 )),
           ],

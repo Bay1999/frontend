@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/gallery/fotobanjir.dart';
+import 'package:frontend/gallery/fotokekeringan.dart';
 import 'package:frontend/pengaduan/pengaduan.dart';
 
 class Foto extends StatefulWidget {
@@ -38,7 +40,14 @@ class _FotoState extends State<Foto> {
                         elevation: 5,
                         shadowColor: Color.fromARGB(100, 0, 0, 0),
                         child: InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  //mengirim parameter id
+                                  builder: (context) => FotoBanjir()),
+                            );
+                          },
                           child: Column(
                             children: <Widget>[
                               Container(
@@ -82,7 +91,14 @@ class _FotoState extends State<Foto> {
                         elevation: 5,
                         shadowColor: Color.fromARGB(100, 0, 0, 0),
                         child: InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  //mengirim parameter id
+                                  builder: (context) => FotoKekeringan()),
+                            );
+                          },
                           child: Column(
                             children: <Widget>[
                               Container(

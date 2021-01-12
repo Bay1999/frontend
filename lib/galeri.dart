@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/foto.dart';
 import 'package:frontend/pengaduan/pengaduan.dart';
+import 'package:frontend/video.dart';
 
 class Galeri extends StatefulWidget {
   @override
@@ -90,7 +91,14 @@ class _GaleriState extends State<Galeri> {
                         elevation: 5,
                         shadowColor: Color.fromARGB(100, 0, 0, 0),
                         child: InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  //mengirim parameter id
+                                  builder: (context) => Video()),
+                            );
+                          },
                           child: Column(
                             children: <Widget>[
                               Container(
